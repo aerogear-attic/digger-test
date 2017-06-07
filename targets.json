@@ -1,0 +1,12 @@
+{
+    "yourTarget": {
+        "host": "https://jenkins.hostname.tld",
+        "user": "username",
+        "pass": "password"
+    },
+    "differentTarget": {
+        "host": "https://jenkins.hostname.tld",
+        "user": "username",
+        "pass": "password"
+    }
+}
