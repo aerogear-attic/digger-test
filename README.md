@@ -9,7 +9,7 @@ $ mvn test -Dtarget=yourTarget [OPTIONS]
 ```
 
 ## Targets
-You need to define your targets in tagets.json file.
+You need to define your targets in tagets.json. Rename targets-example.json to targets.json and update it with your values.
 
 ## Options
 In CLI prepend your options with -D
