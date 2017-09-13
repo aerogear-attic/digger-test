@@ -1,14 +1,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Aerogear Digger test suite" verbose="1" parallel="tests" thread-count="10" configfailurepolicy="skip">
+<suite name="digger-test-suite" verbose="1"
+       parallel="tests" thread-count="10" configfailurepolicy="skip"
+       parent-module="org.aerogear.digger.test.feedhenry.DiggerFeedHenryTemplatesTestModule">
     <test name="Android tests">
         <classes>
-            <class name="org.aerogear.digger.test.AndroidTest" />
+            <class name="org.aerogear.digger.test.AndroidTest"/>
         </classes>
     </test>
     <test name="iOS tests">
         <classes>
-            <class name="org.aerogear.digger.test.IosTest" />
+            <class name="org.aerogear.digger.test.IosTest"/>
         </classes>
     </test>
 </suite>
