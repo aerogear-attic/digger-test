@@ -27,3 +27,7 @@ targets.json
 # JetBrains files
 .idea
 *.iml
+
+# Eclipse files
+.classpath
+.project
