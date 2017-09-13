@@ -19,7 +19,6 @@ In CLI prepend your options with -D
 * **prefix** - _optional_ - prefix used for names of the test entities. Default value is in pom.xml.
 * **fhta-url** - _optional_ - Git url to feedhenry/fh-template-apps fork that should be used for downloading templates
 * **fhta-branch** - _optional_ - branch/tag of feedhenry/fh-template-apps that should be used for downloading templates
-* **self-man-branch** - _optional_ - you need to pass this parameter when testing 4.x templates. Value should be branch name OR tag name from git://pkgs.devel.redhat.com/rpms/rhmap-fh-sdks-docker repo OR just "latest"(tag). For this feature you need to be on **RH VPN**
 
 
 # Adding self-signed certificate to your Java keystore

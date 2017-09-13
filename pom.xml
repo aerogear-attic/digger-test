@@ -11,12 +11,12 @@
     <url>http://maven.apache.org</url>
 
     <properties>
+        <!-- default properties that can be overridden using `-D` -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <prefix>DART</prefix>
         <target></target>
         <fhta-url>git://github.com/matskiv/fh-template-apps.git</fhta-url>
         <fhta-branch>dummy-jenkinsfile</fhta-branch>
-        <self-man-branch></self-man-branch>
     </properties>
 
     <build>
@@ -37,7 +37,6 @@
                             <prefix>${prefix}</prefix>
                             <fhta-url>${fhta-url}</fhta-url>
                             <fhta-branch>${fhta-branch}</fhta-branch>
-                            <self-man-branch>${self-man-branch}</self-man-branch>
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>

@@ -18,7 +18,6 @@ public abstract class TestBase {
     private static String pass;
     private static String fhtaRepoUrl;
     private static String fhtaRepoBranch = "dummy-jenkinsfile";
-    private static String selfManBranch;
 
     private static Object[][] androidTemplates;
     private static Object[][] iosTemplates;
@@ -28,13 +27,7 @@ public abstract class TestBase {
     public void prepareSuite(ITestContext context) throws Exception {
         // TODO test connectivity to $host
 
-        if (selfManBranch != null && selfManBranch.length() > 0) {
-            // TODO fetch git://pkgs.devel.redhat.com/rpms/rhmap-fh-sdks-docker
-            // from Dockerfile extract fh-template-apps-version and fh-template-apps-builde-number
-            // fetch artifact from S3 and un-targz
-        } else {
-            fetchTemplatesFromGithub();
-        }
+        fetchTemplatesFromGithub();
 
         parseTemplates();
     }
@@ -74,7 +67,6 @@ public abstract class TestBase {
 
         fhtaRepoUrl = System.getProperty("fhta-url");
         fhtaRepoBranch = System.getProperty("fhta-branch");
-        selfManBranch = System.getProperty("self-man-branch");
         System.out.println("Templates will be based on " + fhtaRepoUrl + ":" + fhtaRepoBranch + "/global.json");
     }
 
