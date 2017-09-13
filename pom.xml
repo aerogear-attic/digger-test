@@ -10,6 +10,19 @@
     <name>digger-test</name>
     <url>http://maven.apache.org</url>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://issues.jboss.org/browse/AGDIGGER</url>
+    </issueManagement>
+
     <properties>
         <!-- default properties that can be overridden using `-D` -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,11 +30,24 @@
         <target></target>
         <fhta-url>git://github.com/matskiv/fh-template-apps.git</fhta-url>
         <fhta-branch>dummy-jenkinsfile</fhta-branch>
+
+        <!--deps-->
+        <testng.version>6.11</testng.version>
+        <digger-java-client.version>1.0.1</digger-java-client.version>
     </properties>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.6.0</version>
+                    <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -60,12 +86,12 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.11</version>
+            <version>${testng.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.aerogear</groupId>
             <artifactId>digger-java-client</artifactId>
-            <version>1.0.1</version>
+            <version>${digger-java-client.version}</version>
         </dependency>
     </dependencies>
 </project>
