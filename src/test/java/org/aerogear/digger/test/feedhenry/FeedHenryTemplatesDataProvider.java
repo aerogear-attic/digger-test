@@ -36,6 +36,9 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
         LOG.debug("Initializing FeedHenryTemplatesDataProvider");
         LOG.debug("Fetching templates from FeedHenry template apps repo");
         LOG.debug("Repo: {}, branch: {}", testingEnv.fhtaRepoUrl, testingEnv.fhtaRepoBranch);
+        LOG.info("Templates will be based on {}:{}:/global.json", testingEnv.fhtaRepoUrl, testingEnv.fhtaRepoBranch);
+
+        System.out.println(this.diggerTestingEnv);
 
         // TODO fetch templates from $fhtaRepoUrl / $fhtaRepoBranch
         // TODO parse templates from global.json file and sort them based on type into androidTemplates/iosTemplates/cordovaTemplates

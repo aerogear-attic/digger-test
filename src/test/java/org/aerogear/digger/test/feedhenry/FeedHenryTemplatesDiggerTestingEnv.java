@@ -24,7 +24,5 @@ public class FeedHenryTemplatesDiggerTestingEnv extends DiggerTestingEnv {
 
         LOG.debug("Here are env: fhtaRepoUrl={}, fhtaRepoBranch={}",
                 this.fhtaRepoUrl, this.fhtaRepoBranch);
-
-        LOG.info("Templates will be based on {}:{}/global.json", fhtaRepoUrl, fhtaRepoBranch, "/global.json");
     }
 }

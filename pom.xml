@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.aerogear</groupId>
@@ -30,8 +30,8 @@
         <diggerTargetUrl></diggerTargetUrl>
         <diggerUsername></diggerUsername>
         <diggerPassword></diggerPassword>
-        <fhta-url>git://github.com/matskiv/fh-template-apps.git</fhta-url>
-        <fhta-branch>dummy-jenkinsfile</fhta-branch>
+        <fhtaRepoUrl>git://github.com/matskiv/fh-template-apps.git</fhtaRepoUrl>
+        <fhtaRepoBranch>dummy-jenkinsfile</fhtaRepoBranch>
 
         <!--deps-->
         <testng.version>6.11</testng.version>
@@ -41,6 +41,7 @@
         <lombok.version>1.16.12</lombok.version>
         <slf4j.api.version>1.7.21</slf4j.api.version>
         <slf4j-log4j12.version>1.7.21</slf4j-log4j12.version>
+        <httpclient.version>4.5.3</httpclient.version>
 
         <!--plugins-->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -77,8 +78,8 @@
                             <diggerUsername>${diggerUsername}</diggerUsername>
                             <diggerPassword>${diggerPassword}</diggerPassword>
                             <prefix>${prefix}</prefix>
-                            <fhta-url>${fhta-url}</fhta-url>
-                            <fhta-branch>${fhta-branch}</fhta-branch>
+                            <fhtaRepoUrl>${fhtaRepoUrl}</fhtaRepoUrl>
+                            <fhtaRepoBranch>${fhtaRepoBranch}</fhtaRepoBranch>
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>
@@ -133,6 +134,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j-log4j12.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
         </dependency>
     </dependencies>
 </project>
