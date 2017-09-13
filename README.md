@@ -1,11 +1,10 @@
 # Prerequisites
  * JDK 1.7+
  * Maven 4+
- * Optional for self managed templates - AWS credentials for S3 with component builds. (in ~/.aws/credentials)
 
 # How to run
 ```
-$ mvn test -Dtarget=yourTarget [OPTIONS]
+$ mvn test -DdiggerTargetUrl=http://example.com -DdiggerUsername=username -DdiggerPassword=password [OPTIONS]
 ```
 
 ## Targets
@@ -13,7 +12,9 @@ You need to define your targets in tagets.json. Rename targets-example.json to t
 
 ## Options
 In CLI prepend your options with -D
-* **target** - name of target Build Farm.
+* **diggerTargetUrl** - url of the target Build Farm.
+* **diggerUsername** - username for the target Build Farm.
+* **diggerPassword** - password for the target Build Farm.
 * **groups** - _optional_ - comma separated list of groups that should be tested. E.g: `-Dgroups=smoke,other`
 * **excludedGroups** - _optional_ - comma separated list of groups that should not be tested. E.g: `-DexcludedGroups=hybrid,android` - this would only test native iOS templates and other non-android tests.
 * **prefix** - _optional_ - prefix used for names of the test entities. Default value is in pom.xml.

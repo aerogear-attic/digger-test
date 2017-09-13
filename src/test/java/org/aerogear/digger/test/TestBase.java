@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.aerogear.digger.client.DiggerClient;
 import org.aerogear.digger.client.util.DiggerClientException;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
@@ -12,10 +13,9 @@ import org.testng.annotations.DataProvider;
 public abstract class TestBase {
 
     private static String prefix;
-    private static String target;
-    private static String host;
-    private static String user;
-    private static String pass;
+    private static String diggerTargetUrl;
+    private static String diggerUsername;
+    private static String diggerPassword;
     private static String fhtaRepoUrl;
     private static String fhtaRepoBranch = "dummy-jenkinsfile";
 
@@ -60,10 +60,11 @@ public abstract class TestBase {
 
     private void initParams() throws Exception {
         prefix = System.getProperty("prefix");
-        target = System.getProperty("target");
-        if (target == null || target.length() == 0) throw new Exception("target property needs to be defined");
-        System.out.println("Target: " + target);
-        // TODO get host, user and pass from targets.json file based on $target
+        diggerTargetUrl = System.getProperty("diggerTargetUrl");
+        if(StringUtils.isBlank(diggerTargetUrl)){
+            throw new Exception("diggerTargetUrl is required");
+        }
+        System.out.println("Target url: " + diggerTargetUrl);
 
         fhtaRepoUrl = System.getProperty("fhta-url");
         fhtaRepoBranch = System.getProperty("fhta-branch");
@@ -71,7 +72,7 @@ public abstract class TestBase {
     }
 
     public static DiggerClient createClient() throws DiggerClientException {
-        return DiggerClient.createDefaultWithAuth(host, user, pass);
+        return DiggerClient.createDefaultWithAuth(diggerTargetUrl, diggerUsername, diggerPassword);
     }
 
     public static String getPrefix() {

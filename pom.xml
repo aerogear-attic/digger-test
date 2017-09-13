@@ -27,7 +27,9 @@
         <!-- default properties that can be overridden using `-D` -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <prefix>DART</prefix>
-        <target></target>
+        <diggerTargetUrl></diggerTargetUrl>
+        <diggerUsername></diggerUsername>
+        <diggerPassword></diggerPassword>
         <fhta-url>git://github.com/matskiv/fh-template-apps.git</fhta-url>
         <fhta-branch>dummy-jenkinsfile</fhta-branch>
 
@@ -67,7 +69,9 @@
                         <useFile>false</useFile>
                         <trimStackTrace>false</trimStackTrace>
                         <systemPropertyVariables>
-                            <target>${target}</target>
+                            <diggerTargetUrl>${diggerTargetUrl}</diggerTargetUrl>
+                            <diggerUsername>${diggerUsername}</diggerUsername>
+                            <diggerPassword>${diggerPassword}</diggerPassword>
                             <prefix>${prefix}</prefix>
                             <fhta-url>${fhta-url}</fhta-url>
                             <fhta-branch>${fhta-branch}</fhta-branch>
