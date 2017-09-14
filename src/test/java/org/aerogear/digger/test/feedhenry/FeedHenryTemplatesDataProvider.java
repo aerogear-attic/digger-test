@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import org.aerogear.digger.test.DiggerTestDataProvider;
 import org.aerogear.digger.test.DiggerTestingEnv;
 import org.aerogear.digger.test.Template;
+import org.aerogear.digger.test.helper.GitHelper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -29,17 +30,19 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
 
     private static final String TEMPLATES_PARENT_DIR_PATH = FilenameUtils.concat(System.getProperty("user.dir"), ".templates");
 
-    // don't inject a FeedHenryTemplatesDiggerTestingEnv as that will create a new instance inject it.
-    // the binding definition should be for DiggerTestingEnv
-    @Inject
     private DiggerTestingEnv diggerTestingEnv;
+    private GitHelper gitHelper;
 
     private Object[][] androidTemplates;
     private Object[][] iosTemplates;
     private Object[][] cordovaTemplates;
 
-    // keep this no-arg constructor for Guice and TestNG.
-    public FeedHenryTemplatesDataProvider() {
+    // don't inject a FeedHenryTemplatesDiggerTestingEnv as that will create a new instance inject it.
+    // the binding definition should be for DiggerTestingEnv
+    @Inject
+    public FeedHenryTemplatesDataProvider(DiggerTestingEnv diggerTestingEnv, GitHelper gitHelper) {
+        this.diggerTestingEnv = diggerTestingEnv;
+        this.gitHelper = gitHelper;
     }
 
     @Override
@@ -87,16 +90,8 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
         LOG.info("Going to clone templates to path: " + fhTemplateAppsPath);
 
         try {
-            // cannot shallow copy unfortunately :(
-            // see https://bugs.eclipse.org/bugs/show_bug.cgi?id=475615
-            Git.cloneRepository()
-                    .setRemote("origin")
-                    .setURI(testingEnv.fhtaRepoUrl)
-                    .setDirectory(new File(fhTemplateAppsPath))
-                    .setBranchesToClone(singleton("refs/heads/" + testingEnv.fhtaRepoBranch))
-                    .setBranch("refs/heads/" + testingEnv.fhtaRepoBranch)
-                    .call();
-        } catch (GitAPIException e) {
+            this.gitHelper.clone(testingEnv.getFhtaRepoUrl(), fhTemplateAppsPath, testingEnv.getFhtaRepoBranch());
+        } catch (RuntimeException e) {
             throw new RuntimeException("Unable to clone FHTA repository.", e);
         }
 
