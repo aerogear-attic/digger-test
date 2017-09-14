@@ -1,6 +1,7 @@
 package org.aerogear.digger.test.feedhenry;
 
 import com.google.common.base.Charsets;
+import com.google.inject.name.Named;
 import org.aerogear.digger.test.DiggerTestDataProvider;
 import org.aerogear.digger.test.DiggerTestingEnv;
 import org.aerogear.digger.test.Template;
@@ -8,8 +9,6 @@ import org.aerogear.digger.test.helper.GitHelper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -22,14 +21,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static java.util.Collections.singleton;
-
 public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(FeedHenryTemplatesDataProvider.class);
 
-    private static final String TEMPLATES_PARENT_DIR_PATH = FilenameUtils.concat(System.getProperty("user.dir"), ".templates");
-
+    private String templatesDir;
     private DiggerTestingEnv diggerTestingEnv;
     private GitHelper gitHelper;
 
@@ -40,9 +36,10 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
     // don't inject a FeedHenryTemplatesDiggerTestingEnv as that will create a new instance inject it.
     // the binding definition should be for DiggerTestingEnv
     @Inject
-    public FeedHenryTemplatesDataProvider(DiggerTestingEnv diggerTestingEnv, GitHelper gitHelper) {
+    public FeedHenryTemplatesDataProvider(DiggerTestingEnv diggerTestingEnv, GitHelper gitHelper, @Named("templatesDir") String templatesDir) {
         this.diggerTestingEnv = diggerTestingEnv;
         this.gitHelper = gitHelper;
+        this.templatesDir = templatesDir;
     }
 
     @Override
@@ -76,23 +73,14 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
     }
 
     private LinkedHashSet<Template> fetchTemplateConfigs(FeedHenryTemplatesDiggerTestingEnv testingEnv) {
-        // TODO: don't delete templates in the future.
-        // TODO: just do "git pull" if everything is the same (repo, branch, state etc.)
-
-        try {
-            FileUtils.deleteDirectory(new File(TEMPLATES_PARENT_DIR_PATH));
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to delete templates parent dir: " + TEMPLATES_PARENT_DIR_PATH, e);
-        }
-
-        final String fhTemplateAppsPath = FilenameUtils.concat(TEMPLATES_PARENT_DIR_PATH, "fh-template-apps");
+        final String fhTemplateAppsPath = FilenameUtils.concat(templatesDir, "fh-template-apps");
 
         LOG.info("Going to clone templates to path: " + fhTemplateAppsPath);
 
         try {
-            this.gitHelper.clone(testingEnv.getFhtaRepoUrl(), fhTemplateAppsPath, testingEnv.getFhtaRepoBranch());
+            this.gitHelper.cloneOrUpdate(testingEnv.getFhtaRepoUrl(), testingEnv.getFhtaRepoBranch(), fhTemplateAppsPath);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Unable to clone FHTA repository.", e);
+            throw new RuntimeException("Unable to clone or update FHTA repository.", e);
         }
 
         final String globalJsonPath = FilenameUtils.concat(fhTemplateAppsPath, "global.json");
