@@ -1,5 +1,15 @@
 package org.aerogear.digger.test;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.json.JSONObject;
+
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode(of = "templateId")
+@ToString
 public class Template {
 
     private String templateId;
@@ -7,28 +17,13 @@ public class Template {
     private String repoUrl;
     private String repoBranch;
 
-    public Template(String templateId, String templateName, String repoUrl, String repoBranch) {
-        super();
-        this.templateId = templateId;
-        this.templateName = templateName;
-        this.repoUrl = repoUrl;
-        this.repoBranch = repoBranch;
-    }
-
-    public String getTemplateId() {
-        return templateId;
-    }
-
-    public String getTemplateName() {
-        return templateName;
-    }
-
-    public String getRepoUrl() {
-        return repoUrl;
-    }
-
-    public String getRepoBranch() {
-        return repoBranch;
+    public Template(JSONObject jsonTemplate) {
+        this(
+                jsonTemplate.getString("id"),
+                jsonTemplate.getString("name"),
+                jsonTemplate.getString("repoUrl"),
+                jsonTemplate.getString("repoBranch")
+        );
     }
 
 }
