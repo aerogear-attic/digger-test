@@ -31,3 +31,6 @@ targets.json
 # Eclipse files
 .classpath
 .project
+
+# Testing data
+.templates
