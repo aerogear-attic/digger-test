@@ -1,6 +1,9 @@
 package org.aerogear.digger.test.feedhenry;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
 import com.google.inject.name.Named;
 import org.aerogear.digger.test.DiggerTestDataProvider;
 import org.aerogear.digger.test.DiggerTestingEnv;
@@ -24,6 +27,8 @@ import java.util.*;
 public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(FeedHenryTemplatesDataProvider.class);
+
+    private static final ImmutableSet<String> IGNORED_TEMPLATE_TYPES = ImmutableSet.of("webapp_advanced", "cloud_nodejs");
 
     private String templatesDir;
     private DiggerTestingEnv diggerTestingEnv;
@@ -103,7 +108,7 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
             throw new RuntimeException("Unable to parse global.json", e);
         }
 
-        final List<Template> appTemplatesList = new ArrayList<>();
+        final List<JSONObject> appTemplatesJSONList = new ArrayList<>();
 
         try {
             final JSONObject show = jsonObject.getJSONObject("show");
@@ -128,7 +133,7 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
                         } else {
                             final JSONObject jsonTemplate = projectAppTemplates.getJSONObject(j);
                             LOG.debug("Found project app template {}", jsonTemplate.getString("id"));
-                            appTemplatesList.add(new Template(jsonTemplate));
+                            appTemplatesJSONList.add(jsonTemplate);
                         }
                     }
                 }
@@ -139,11 +144,34 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
             for (int i = 0; i < appTemplates.length(); i++) {
                 final JSONObject jsonTemplate = appTemplates.getJSONObject(i);
                 LOG.debug("Found app template {}", jsonTemplate.getString("id"));
-                appTemplatesList.add(new Template(jsonTemplate));
+                appTemplatesJSONList.add(jsonTemplate);
             }
         } catch (RuntimeException e) {
             throw new RuntimeException("Error while processing global.json", e);
         }
+
+        LOG.debug("Filtering out app templates that are not to be tested");
+
+        // didn't want to convert to set immediately here
+        // since I wanted 2 things:
+        // 1. order in global.json file should be the test order.
+        //    FluentIterable.toSet() will create a HashSet and that breaks the insertion order.
+        // 2. inform the duplicate templates
+        final List<Template> appTemplatesList = FluentIterable
+                .from(appTemplatesJSONList)
+                .filter(new com.google.common.base.Predicate<JSONObject>() {
+                    @Override
+                    public boolean apply(JSONObject jsonObject) {
+                        return !IGNORED_TEMPLATE_TYPES.contains(jsonObject.getString("type"));
+                    }
+                })
+                .transform(new Function<JSONObject, Template>() {
+                    @Override
+                    public Template apply(JSONObject jsonObject) {
+                        return new Template(jsonObject);
+                    }
+                })
+                .toList();
 
         // using a set so that we don't have duplicates
         // using a linked hash set so that we have an iteration order same as insertion order
