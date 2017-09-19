@@ -77,9 +77,6 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
 
         // group templates
         this.groupTemplates(templates);
-
-        // sync templates' local repos
-        this.syncTemplates(templates);
     }
 
     private LinkedHashSet<Template> syncTemplateConfig(FeedHenryTemplatesDiggerTestingEnv testingEnv) {
@@ -270,23 +267,6 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
         // cordovaTemplates = new Object[][]{
         //         {new Template("sync_app", "Sync App", "git://github.com/feedhenry-templates/sync-cordova-app.git", "master")} // temporary
         // };
-    }
-
-    private void syncTemplates(Set<Template> templates) {
-        LOG.info("Going to sync templates");
-
-        for (Template template : templates) {
-            try {
-                LOG.trace("Going to sync template={}", template);
-                this.gitHelper.sync(template.getRepoUrl(), template.getRepoBranch(), template.getTemplateId());
-            } catch (Exception e) {
-                LOG.error("Error syncing template={}", template);
-                LOG.error("Reason is", e);
-                throw new RuntimeException("Unable to sync template " + template.getTemplateId(), e);
-            }
-        }
-
-        LOG.info("Successfully synced all templates");
     }
 
     @Override
