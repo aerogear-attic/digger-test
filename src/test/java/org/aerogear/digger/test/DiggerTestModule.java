@@ -4,8 +4,17 @@ import com.google.inject.Binder;
 import com.google.inject.Module;
 
 /**
- * @author Ali Ok (ali.ok@apache.org)
- * 13/09/2017 12:38
+ * This is the Guice module that TestNG uses.
+ * It is meant to be empty because the <code>parent-module</code>
+ * in <code>testng.xml</code> should be the place where bindings are defined.
+ * <p>
+ * Note that any binding defined here will override the bindings
+ * in the <code>parent-module</code>.
+ * <p>
+ * Implementations of this testing project should define a new module and use it
+ * as the <code>parent-module</code> in <code>testng.xml</code>.
+ * See {@link org.aerogear.digger.test.feedhenry.DiggerFeedHenryTemplatesTestModule} as
+ * and example.
  **/
 public class DiggerTestModule implements Module {
     @Override

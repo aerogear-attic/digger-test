@@ -6,8 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * We have this class to hold all data related to testing.
- * The reason that we have it is we want to externalize these data.
+ * We have this class to hold all parameters related to testing.
+ * The reason that we have it this way is we want to externalize
+ * reading of these parameters.
  * Also, this approach would make the code extendable.
  **/
 @Getter

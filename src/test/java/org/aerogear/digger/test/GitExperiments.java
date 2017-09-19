@@ -5,10 +5,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Level;
 import org.testng.annotations.Test;
 
-/**
- * @author Ali Ok (ali.ok@apache.org)
- * 14/09/2017 15:05
- **/
+// TODO: to be deleted... this class is used to quickly test the GitHelper class
 @Test
 public class GitExperiments {
 
@@ -23,7 +20,7 @@ public class GitExperiments {
         final String projectName = "fh-template-apps";
 
         new GitHelper(FilenameUtils.concat(System.getProperty("user.dir"), ".experiment-templates"))
-                .cloneOrUpdate(repoUrl, repoBranch, projectName);
+                .sync(repoUrl, repoBranch, projectName);
     }
 
 

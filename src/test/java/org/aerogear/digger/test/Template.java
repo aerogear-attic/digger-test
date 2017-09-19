@@ -6,6 +6,12 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.json.JSONObject;
 
+/**
+ * Represents a template that is to be tested.
+ * <p>
+ * Please note that 2 templates are considered to be equal
+ * if they have the same id.
+ */
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(of = "templateId")

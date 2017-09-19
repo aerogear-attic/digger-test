@@ -24,6 +24,9 @@ import java.util.Set;
 import static java.util.Collections.singleton;
 import static org.eclipse.jgit.lib.ConfigConstants.*;
 
+/**
+ * Provides functions to help with syncing a Git repo.
+ */
 public class GitHelper {
 
     // TODO: check timeout
@@ -41,7 +44,29 @@ public class GitHelper {
         this.templatesDir = templatesDir;
     }
 
-    public void cloneOrUpdate(String repoUrl, String repoBranch, String projectName) {
+    /**
+     * Syncs a Git repo. If there is no existing local repository, this method clones the remote
+     * repository. If there is a local repository already, this method pulls the changes from
+     * the given remote repository.
+     * <p>
+     * Pulling a remote repository would require some things:
+     * <p>
+     * <ul>
+     * <li>Checking if the Git <code>remote</code> exists and updating/adding it if necessary</li>
+     * <li>Fetching the remote</li>
+     * <li>Hard resetting current branch to HEAD</li>
+     * <li>Checking out specified repository branch</li>
+     * <li>Pulling from the remote branch</li>
+     * </ul>
+     * <p>
+     * Target path is computed using <code>@Named</code> {@link #templatesDir} parameter.
+     * Essentially it is <code>templatesDir + "/" + projectName</code>.
+     *
+     * @param repoUrl     - remote repository URL
+     * @param repoBranch  - branch name to sync in remote repository
+     * @param projectName - project name to use for logging and also computing the path for the local repository
+     */
+    public void sync(String repoUrl, String repoBranch, String projectName) {
         final String targetPath = FilenameUtils.concat(this.templatesDir, projectName);
 
         LOG.info("Going to clone or update project. url={}, targetDir={}, branch={}, projectName={}", repoUrl, targetPath, repoBranch, projectName);

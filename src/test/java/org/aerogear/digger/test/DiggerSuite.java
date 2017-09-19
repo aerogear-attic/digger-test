@@ -8,6 +8,14 @@ import org.testng.annotations.BeforeSuite;
 import javax.inject.Inject;
 
 
+/**
+ * This is a base for the tests. Test classes should extend this class
+ * to make sure parameters are read and data provider is initialized.
+ * <p>
+ * Although this class doesn't provide any methods to be used by the test
+ * classes, unfortunately there is no other way in TestNG to make sure
+ * {@link BeforeSuite} methods are triggered.
+ */
 public abstract class DiggerSuite {
 
     private static final Logger LOG = LoggerFactory.getLogger(DiggerSuite.class);

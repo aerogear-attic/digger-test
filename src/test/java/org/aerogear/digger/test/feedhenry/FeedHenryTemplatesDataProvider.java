@@ -24,6 +24,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Implements {@link DiggerTestDataProvider} with providing data of FeedHenry templates.
+ */
 public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(FeedHenryTemplatesDataProvider.class);
@@ -83,7 +86,7 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
         LOG.info("Going to clone templates to path: " + fhTemplateAppsPath);
 
         try {
-            this.gitHelper.cloneOrUpdate(testingEnv.getFhtaRepoUrl(), testingEnv.getFhtaRepoBranch(), fhTemplateAppsPath);
+            this.gitHelper.sync(testingEnv.getFhtaRepoUrl(), testingEnv.getFhtaRepoBranch(), fhTemplateAppsPath);
         } catch (RuntimeException e) {
             throw new RuntimeException("Unable to clone or update FHTA repository.", e);
         }

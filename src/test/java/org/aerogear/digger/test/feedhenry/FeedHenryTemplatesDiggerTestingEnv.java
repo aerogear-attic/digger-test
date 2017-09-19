@@ -5,6 +5,9 @@ import org.aerogear.digger.test.DiggerTestingEnv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Extends {@link DiggerTestingEnv} with some parameters specific to FeedHenry templates.
+ */
 @Getter
 public class FeedHenryTemplatesDiggerTestingEnv extends DiggerTestingEnv {
 
