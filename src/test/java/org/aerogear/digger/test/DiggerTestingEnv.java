@@ -35,5 +35,9 @@ public class DiggerTestingEnv {
         if (StringUtils.isBlank(diggerTargetUrl)) {
             throw new RuntimeException("diggerTargetUrl is required");
         }
+
+        if (StringUtils.isBlank(prefix)) {
+            throw new RuntimeException("prefix is required");
+        }
     }
 }

@@ -1,11 +1,15 @@
 package org.aerogear.digger.test;
 
+import com.offbytwo.jenkins.JenkinsServer;
+import com.offbytwo.jenkins.model.Job;
+import org.aerogear.digger.client.DiggerClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeSuite;
 
 import javax.inject.Inject;
+import java.util.Map;
 
 
 /**
@@ -27,22 +31,46 @@ public abstract class DiggerSuite {
     private DiggerTestingEnv diggerTestingEnv;
 
     // @BeforeSuite is only run once, regardless of what class it belongs to.
-    @BeforeSuite(alwaysRun = true, dependsOnMethods = "cleanUp")
-    public void prepareSuite(ITestContext context) throws Exception {
-        LOG.info("Initializing Digger test suite... Preparing the suite");
-
-        // TODO test connectivity to $host
+    @BeforeSuite(alwaysRun = true)
+    public void initialize(ITestContext context) throws Exception {
+        LOG.info("Initializing Digger test suite");
 
         this.diggerTestingEnv.initialize();
-        this.diggerTestDataProvider.initialize();
     }
 
     // @BeforeSuite is only run once, regardless of what class it belongs to.
-    @BeforeSuite(alwaysRun = true)
+    @BeforeSuite(alwaysRun = true, dependsOnMethods = "initialize")
     public void cleanUp(ITestContext context) throws Exception {
         LOG.info("Cleaning up");
 
-        // TODO get list of apps from jenkins and remove all with $prefix
+        // TODO: bind in module and inject here?
+        final DiggerClient diggerClient = DiggerClient.createDefaultWithAuth(
+                this.diggerTestingEnv.getDiggerTargetUrl(),
+                this.diggerTestingEnv.getDiggerUsername(),
+                this.diggerTestingEnv.getDiggerPassword()
+        );
+
+        final JenkinsServer jenkinsServer = diggerClient.getJenkinsServer();
+
+        // get list of apps from jenkins and remove all with $prefix
+        final Map<String, Job> jobs = jenkinsServer.getJobs();
+        for (String jobKey : jobs.keySet()) {
+            if (jobKey.startsWith(this.diggerTestingEnv.getPrefix())) {
+                LOG.debug("Deleting job that matches the prefix. Job key: {}", jobKey);
+                jenkinsServer.deleteJob(jobKey);
+            }
+        }
+
+    }
+
+    // @BeforeSuite is only run once, regardless of what class it belongs to.
+    @BeforeSuite(alwaysRun = true, dependsOnMethods = "cleanUp")
+    public void prepareSuite(ITestContext context) throws Exception {
+        LOG.info("Preparing the suite");
+
+        // TODO test connectivity to $host
+
+        this.diggerTestDataProvider.initialize();
     }
 
 }
