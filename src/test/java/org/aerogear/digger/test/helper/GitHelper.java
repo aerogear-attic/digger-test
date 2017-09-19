@@ -65,8 +65,9 @@ public class GitHelper {
      * @param repoUrl     - remote repository URL
      * @param repoBranch  - branch name to sync in remote repository
      * @param projectName - project name to use for logging and also computing the path for the local repository
+     * @return the path of the target local repository
      */
-    public void sync(String repoUrl, String repoBranch, String projectName) {
+    public String sync(String repoUrl, String repoBranch, String projectName) {
         final String targetPath = FilenameUtils.concat(this.templatesDir, projectName);
 
         LOG.info("Going to clone or update project. url={}, targetDir={}, branch={}, projectName={}", repoUrl, targetPath, repoBranch, projectName);
@@ -75,7 +76,7 @@ public class GitHelper {
         if (!repoDir.exists()) {
             LOG.debug("Local repository not found, going to clone. projectName={}", projectName);
             gitClone(repoUrl, targetPath, repoBranch, projectName);
-            return;
+            return targetPath;
         }
 
         if (!repoDir.isDirectory()) {
@@ -101,6 +102,8 @@ public class GitHelper {
         this.checkoutRepoBranch(repository, repoUrl, repoBranch, projectName);
         this.resetToRepoBranch(repository, repoBranch, projectName);
         this.pullRemote(repository, repoBranch, projectName);
+
+        return targetPath;
     }
 
     private void pullRemote(Repository repository, String repoBranch, String projectName) {

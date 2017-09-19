@@ -30,7 +30,7 @@
         <diggerTargetUrl></diggerTargetUrl>
         <diggerUsername></diggerUsername>
         <diggerPassword></diggerPassword>
-        <fhtaRepoUrl>git://github.com/matskiv/fh-template-apps.git</fhtaRepoUrl>
+        <fhtaRepoUrl>git://github.com/aliok/fh-template-apps.git</fhtaRepoUrl>
         <fhtaRepoBranch>dummy-jenkinsfile</fhtaRepoBranch>
 
         <!--deps-->
