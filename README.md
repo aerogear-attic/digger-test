@@ -30,5 +30,30 @@ openssl s_client -showcerts -connect $JENKINS_URL < /dev/null | openssl x509 -ou
 sudo keytool -import -alias $CERT_ALIAS -keystore $JAVA_HOME/jre/lib/security/cacerts -file tmp_cert.der
 ```
 
+# Development
+In order to make changes in this project and test it in a project which extends this one, 
+do `mvn install -DskipTests=true`.
+
+# Releasing
+
+We release a JAR for this project to extend it. For example, people at Red Hat Mobile Application Platform (RHMAP)
+are extending this project to run tests for productized RHMAP templates.
+
+As this is a testing project, running the tests during the release doesn't make sense.
+
+Just release it as:
+
+TODO
+```
+   mvn release
+
+``` 
+
 # Extending
-TODO: document me
+
+In order to extend this project to hook in your own test cases, you need to add a dependency to
+this project's artifact and then define a `testng.xml` file. In your `testng.xml` file, make sure
+you define `parent-module` with a Guice `Module` which you implemented.
+
+You can override things like templates to test, environment variables etc. 
+See `DiggerFeedHenryTemplatesTestModule`, a default implementation, as an example.
