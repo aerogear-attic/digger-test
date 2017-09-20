@@ -7,9 +7,6 @@
 $ mvn test -DdiggerTargetUrl=http://example.com -DdiggerUsername=username -DdiggerPassword=password [OPTIONS]
 ```
 
-## Targets
-TODO: document me
-
 ## Options
 In CLI prepend your options with -D
 * **diggerTargetUrl** - url of the target Build Farm.
@@ -57,3 +54,11 @@ you define `parent-module` with a Guice `Module` which you implemented.
 
 You can override things like templates to test, environment variables etc. 
 See `DiggerFeedHenryTemplatesTestModule`, a default implementation, as an example.
+
+# Design decisions
+
+* No static data provider for TestNG: We use dependency injection with Guice and TestNG to make 
+  it easy for the other projects to extend the code. Static things are horrible to extend.
+  
+* Pluggable environment: In order to make use of different environment variables (or system props)
+  in projects that extend this one, reading environment variables is made pluggable. 
