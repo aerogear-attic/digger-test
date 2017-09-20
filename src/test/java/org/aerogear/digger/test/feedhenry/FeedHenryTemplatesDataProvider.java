@@ -287,6 +287,7 @@ public class FeedHenryTemplatesDataProvider implements DiggerTestDataProvider {
         return filterSmokeTemplates(context, cordovaTemplates);
     }
 
+    // TODO: review this one
     private Object[][] filterSmokeTemplates(ITestContext context, Object[][] templates) {
         List<String> includedGroups = Arrays.asList(context.getIncludedGroups());
 

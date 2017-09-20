@@ -25,28 +25,12 @@ public class AndroidTest extends DiggerSuite {
     }
 
     @Test(groups = {"native", "templates", "smoke"}, dataProvider = "androidTemplates")
-    public void testNativeTemplates(Template t) throws Exception {
-        templateTester.test(t, "android", "debug", "asd");
-
-        // DiggerClient client = createClient();
-        // String jobName = getPrefix() + "-" + t.getTemplateId() + "-" + UUID.randomUUID().toString();
-
-        // System.out.println("Creating job: " + jobName);
-        //client.createJob(jobName, t.getRepoUrl(), t.getRepoBranch());
-        //BuildTriggerStatus status = client.build(jobName);
-        //System.out.println(status);
+    public void testNativeTemplatesDebugBuild(Template t) throws Exception {
+        templateTester.test(t, "android", "debug", null);
     }
 
     @Test(groups = {"hybrid", "templates", "smoke"}, dataProvider = "cordovaTemplates")
     public void testHybridTemplates(Template t) throws Exception {
-//        templateTester.test(t, "android", "debug", null);
-
-        // DiggerClient client = createClient();
-        // String jobName = getPrefix() + "-" + t.getTemplateId() + "-" + UUID.randomUUID().toString();
-
-        // System.out.println("Creating job: " + jobName);
-        //client.createJob(jobName, t.getRepoUrl(), t.getRepoBranch());
-        //BuildTriggerStatus status = client.build(jobName);
-        //System.out.println(status);
+        templateTester.test(t, "android", "debug", null);
     }
 }

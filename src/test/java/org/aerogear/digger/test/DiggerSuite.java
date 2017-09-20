@@ -35,6 +35,8 @@ public abstract class DiggerSuite {
     public void initialize(ITestContext context) throws Exception {
         LOG.info("Initializing Digger test suite");
 
+        // TODO test connectivity to $host
+
         this.diggerTestingEnv.initialize();
     }
 
@@ -43,7 +45,6 @@ public abstract class DiggerSuite {
     public void cleanUp(ITestContext context) throws Exception {
         LOG.info("Cleaning up");
 
-        // TODO: bind in module and inject here?
         final DiggerClient diggerClient = DiggerClient.createDefaultWithAuth(
                 this.diggerTestingEnv.getDiggerTargetUrl(),
                 this.diggerTestingEnv.getDiggerUsername(),
@@ -67,8 +68,6 @@ public abstract class DiggerSuite {
     @BeforeSuite(alwaysRun = true, dependsOnMethods = "cleanUp")
     public void prepareSuite(ITestContext context) throws Exception {
         LOG.info("Preparing the suite");
-
-        // TODO test connectivity to $host
 
         this.diggerTestDataProvider.initialize();
     }
